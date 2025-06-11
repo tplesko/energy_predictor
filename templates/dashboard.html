@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - Energy Predictor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+  <div class="dashboard-container">
+    <aside>
+      <h2>Kućanstva</h2>
+      <form id="addHouseholdForm">
+        <input type="text" id="householdName" placeholder="Unesi naziv kućanstva" required />
+        <button type="submit">Dodaj</button>
+      </form>
+      <ul id="householdList"></ul>
+
+      <h3 style="display: flex; align-items: center; gap: 6px;">
+        Nova predikcija
+        <i id="infoIcon" class="fas fa-info-circle" style="cursor: pointer;"></i>
+      </h3>      
+      <form id="predictionForm">
+        <input type="number" step="any" name="Global_reactive_power" placeholder="Global_reactive_power(kW)" required />
+        <input type="number" step="any" name="Voltage" placeholder="Voltage(V)" required />
+        <input type="number" step="any" name="Global_intensity" placeholder="Global_intensity(A)" required />
+        <input type="number" step="any" name="Sub_metering_1" placeholder="Sub_metering_1" required />
+        <input type="number" step="any" name="Sub_metering_2" placeholder="Sub_metering_2" required />
+        <input type="number" step="any" name="Sub_metering_3" placeholder="Sub_metering_3" required />
+        <select id="householdSelect" name="householdSelect" required></select>
+        <button type="submit">Predikcija</button>
+      </form>
+
+      <form action="/logout" method="get" style="margin-top: auto;">
+        <button type="submit" class="logout-btn">Odjava</button>
+      </form>
+    </aside>
+
+    <main>
+      <section class="filters">
+        <label for="filterDay">Dan:</label>
+        <input type="number" id="filterDay" min="1" max="31" />
+        <label for="filterMonth">Mjesec:</label>
+        <input type="number" id="filterMonth" min="1" max="12" />
+        <label for="filterYear">Godina:</label>
+        <input type="number" id="filterYear" min="2000" max="2100" />
+        <button id="applyFilters">Primijeni</button>
+        <button id="resetFilters" style="margin-left: 10px;">Očisti filtere</button>
+      </section>     
+
+      <div class="charts">
+        <canvas id="predictionTrendChart"></canvas>
+        <canvas id="householdComparisonChart"></canvas>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <h2>Povijest predikcija</h2>
+        <select id="sortOrder">
+          <option value="desc">Najnovije prvo</option>
+          <option value="asc">Najstarije prvo</option>
+        </select>
+      </div>      
+      <div class="history-scroll">
+        <table id="historyTable">
+          <thead>
+            <tr>
+              <th>Kućanstvo</th>
+              <th>Vrijeme</th>
+              <th>Predikcija</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </main>
+
+  </div>
+  <div class="global-tooltip" id="globalTooltip" style="display: none;"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

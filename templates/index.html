@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Energy Predictor Login/Register</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://kit.fontawesome.com/a81368914c.js" crossorigin="anonymous"></script> <!-- za ikone -->
+</head>
+<body>
+
+    <h2>Energy consumption predictor</h2>
+	{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form action="/register" method="POST">
+			<h1>Create Account</h1>
+			<span>or use your account</span>
+			<input type="text" name="username" placeholder="Username" required />
+			<input type="password" name="password" placeholder="Password" required />
+			<input type="password" name="confirm_password" placeholder="Repeat Password" required />
+			<button type="submit">Sign Up</button>
+		  </form>		  
+	</div>
+	<div class="form-container sign-in-container">
+		<form action="/login" method="POST">
+			<h1>Sign in</h1>
+			<span>enter username and password</span>
+			<input type="text" name="username" placeholder="Username" required />
+			<input type="password" name="password" placeholder="Password" required />
+			<a href="#">Forgot your password?</a>
+			<button type="submit">Sign In</button>
+		</form>			  
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Predictor</h1>
+                <p>*You can use this predictor without saving and tracking your data.</p>
+				<form id="predictFormLeft">
+					<input type="number" step="any" name="Global_reactive_power" placeholder="Global Reactive Power" required />
+					<input type="number" step="any" name="Voltage" placeholder="Voltage" required />
+					<input type="number" step="any" name="Global_intensity" placeholder="Global Intensity" required />
+					<input type="number" step="any" name="Sub_metering_1" placeholder="Sub Metering 1" required />
+					<input type="number" step="any" name="Sub_metering_2" placeholder="Sub Metering 2" required />
+					<input type="number" step="any" name="Sub_metering_3" placeholder="Sub Metering 3" required />
+					<button type="submit">Predict</button>
+				  </form>				  
+                <br>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Predictor</h1>
+                <p>*You can use this predictor without saving and tracking your data.</p>
+				<form id="predictFormRight">
+					<input type="number" step="any" name="Global_reactive_power" placeholder="Global Reactive Power" required />
+					<input type="number" step="any" name="Voltage" placeholder="Voltage" required />
+					<input type="number" step="any" name="Global_intensity" placeholder="Global Intensity" required />
+					<input type="number" step="any" name="Sub_metering_1" placeholder="Sub Metering 1" required />
+					<input type="number" step="any" name="Sub_metering_2" placeholder="Sub Metering 2" required />
+					<input type="number" step="any" name="Sub_metering_3" placeholder="Sub Metering 3" required />
+					<button type="submit">Predict</button>
+				  </form>
+                <br>
+				<button class="ghost" id="signUp">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</div>
+    
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    
+    </body>    
+</html>
